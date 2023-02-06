@@ -1,6 +1,7 @@
 package com.example.jwt.security;
 
 import com.example.jwt.filter.CustomAuthenFIlter;
+import com.example.jwt.filter.CustomAuthoFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +38,8 @@ public class securityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/api/user/**").hasAuthority("ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new CustomAuthenFIlter(authenticationManagerBean()));
+                .addFilter(new CustomAuthenFIlter(authenticationManagerBean()))
+                .addFilterBefore(new CustomAuthoFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
