@@ -52,7 +52,7 @@ public class CustomAuthenFIlter extends UsernamePasswordAuthenticationFilter {
                 .withExpiresAt(new Date(System.currentTimeMillis() + 30*60*1000))
                 .sign(algorithm);
         response.setHeader("access_token", access_token);
-        response.setHeader("refresg_token", refresh_token);
+        response.setHeader("refresh_token", refresh_token);
 
     }
 }
